@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<%
+    java.net.URL thisUrl = new java.net.URL(request.getRequestURL().toString());
+    String port = (thisUrl.getPort() == -1) ? ("") : (":"+thisUrl.getPort());
+    String codebase = "http://"+thisUrl.getHost()+port+request.getContextPath();
+%>
+<% response.setContentType("application/x-java-jnlp-file"); %>
+<jnlp spec="1.5+" codebase="<%=codebase%>">
+
+    <information>
+        <title>R Cloud Workbench</title>
+        <vendor>European Bioinformatics Institute</vendor>
+        <description>R Cloud Workbench</description>
+        <description kind="short">AE R Bench</description>
+        <homepage href="http://www.ebi.ac.uk/"/>
+        <icon href="${libdir}/images/icon.png"/>
+        <icon kind="splash" href="${libdir}/images/icon.png"/>
+    </information>
+
+    <security>
+        <all-permissions/>
+    </security>
+
+    <resources>
+        <j2se version="1.6+"
+         initial-heap-size="64m"
+         max-heap-size="1024m"/>
+
+        <property name="baseurl" value="<%=codebase%>"/>
+        <property name="autologon" value="true"/>
+        <property name="nopool" value="=false"/>
+        <property name="save" value="true"/>
+        <property name="demo" value="false"/>
+        <!--property name="lf" value="2"/-->
+        <property name="login" value="guest"/>
+        <property name="apple.laf.useScreenMenuBar" value="true"/>
+        <property name="dock:name" value="R Cloud Workbench"/>
+        <property name="local.repos.url" value="http://wwwdev.ebi.ac.uk/Tools/rcloud"/>
+        <property name="awt.useSystemAAFontSetting" value="lcd"/>
+        <property name="swing.aatext" value="true"/>
+
+        $dependencies
+
+    </resources>
+
+    <application-desc main-class="workbench.WorkbenchLauncher"/>
+
+</jnlp>
+

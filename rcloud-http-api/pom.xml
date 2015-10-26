@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>rcloud</artifactId>
+        <groupId>uk.ac.ebi.rcloud</groupId>
+        <version>1.4.0-rcloud</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>uk.ac.ebi.rcloud</groupId>
+    <artifactId>rcloud-http-api</artifactId>
+    <version>1.4.0-rcloud</version>
+    <name>R Cloud Http Api</name>
+
+
+    <dependencies>
+
+        <dependency>
+            <groupId>uk.ac.ebi.rcloud</groupId>
+            <artifactId>rcloud-server-api</artifactId>
+            <version>1.4.0-rcloud</version>
+        </dependency>
+
+        <dependency>
+            <groupId>uk.ac.ebi.rcloud</groupId>
+            <artifactId>rcloud-util</artifactId>
+            <version>1.4.0-rcloud</version>
+        </dependency>
+
+        <dependency>
+            <groupId>uk.ac.ebi.rcloud</groupId>
+            <artifactId>rcloud-rpf-api</artifactId>
+            <version>1.4.0-rcloud</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
+
+        <dependency> <!-- this will allow redirection of java.util.logging calls via slf4j -->
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>1.5.6</version>
+        </dependency>
+        <dependency> <!-- native slf4j api for own application logging -->
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.5.6</version>
+        </dependency>
+        <dependency> <!-- log4j binding: all logging captured via slf4j sinks to log4j -->
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.5.6</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency> <!-- log4j itself (note the runtime scope) -->
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency> <!-- this is for all those frameworks that use commons-logging. log4j will be capturing those -->
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                     <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+      </plugins>
+    </build>
+
+</project>

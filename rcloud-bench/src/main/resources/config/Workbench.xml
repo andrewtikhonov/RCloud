@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<config>
+
+    <aliasMap>
+        <names> 
+            Alpha Beta Gamma Delta Epsilon Zeta Eta Theta Iota Kappa Lambda Mu Nu Xi Omicron Pi Rho
+            Sigma Tau Libra Phi Chi Psi Omega Andromeda Auriga Gemini Orion Astra Vega Lyra Hercules
+            Aries Draco Phoenix Scorpius Taurus Virgo Sagitta Sextans Ursa Centaurus Carina Ara Proxima
+            Cassiopeia Aquila Aquarius Lynx Cygnus Sagittarius Apus Cepheus Cetus Chamaeleon Circinus
+            Columba Corvus Crater Crux Delphinus Dorado Equuleus Eridanus Fornax Grus Hydra Indus
+            Lacerta Leo Lupus Mensa Monoceros Musca Norma Octans Pegasus Perseus Pictor Pisces Pyxis
+            Reticulum Serpens Triangulum Vela Volans Pallas Pandora Apollo Ares Artemis Athena Demeter
+            Dionysus Hades Hera Hermes Poseidon Zeus Aether Chaos Chronos Erebus Gaia Hemera Zephyrus
+            Nyx Tartarus Ouranos Themis Atlas Oceanus Tethys Hyperion Theia Coeus Phoebe Rhea Crius
+            Iapetus Prometheus Helios Kronos
+        </names>
+    </aliasMap>
+
+    <!--
+        "http://cran.uk.r-project.org/"
+        "http://bioconductor.org/packages/2.4/bioc"
+        "http://bioconductor.org/packages/2.4/data/annotation"
+        "http://bioconductor.org/packages/2.4/data/experiment"
+        try({ source("http://bioconductor.org/biocLite.R") })
+    -->
+
+</config>

@@ -1,0 +1,411 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: node_data; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+--
+
+CREATE TABLE node_data (
+    node_name character varying(100) NOT NULL,
+    node_type character varying(50),
+    host_ip character varying(100) NOT NULL,
+    pool_prefix character varying(1000) NOT NULL,
+    host_name character varying(100),
+    login character varying(100),
+    pwd character varying(400),
+    install_dir character varying(400),
+    create_servant_command character varying(400),
+    kill_servant_command character varying(400),
+    os character varying(100),
+    servant_nbr_min integer NOT NULL,
+    servant_nbr_max integer NOT NULL,
+    process_counter integer NOT NULL,
+    step integer NOT NULL,
+    threshold integer NOT NULL,
+    basefolder character varying(400),
+    list_command character varying(400),
+    setup_profile_command character varying(400)
+);
+
+
+ALTER TABLE public.node_data OWNER TO postgres;
+
+--
+-- Name: options; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+--
+
+CREATE TABLE options (
+    option_name character varying(500) NOT NULL,
+    option_value character varying(4000) NOT NULL
+);
+
+
+ALTER TABLE public.options OWNER TO postgres;
+
+--
+-- Name: pool_data; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+--
+
+CREATE TABLE pool_data (
+    pool_name character varying(1000) NOT NULL,
+    timeout integer,
+    pool_prefixes character varying(1000) NOT NULL,
+    on_demand integer
+);
+
+
+ALTER TABLE public.pool_data OWNER TO postgres;
+
+--
+-- Name: projects; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+--
+
+CREATE TABLE projects (
+    title character varying(400) NOT NULL,
+    folder character varying(400) NOT NULL,
+    owner character varying(100) NOT NULL,
+    status character varying(40) NOT NULL,
+    description character varying(4000),
+    created timestamp without time zone,
+    last_opened timestamp without time zone,
+    last_closed timestamp without time zone,
+    times_opened integer,
+    overall_time interval day to second,
+    basefolder character varying(400),
+    last_activity timestamp without time zone,
+    notified integer
+);
+
+
+ALTER TABLE public.projects OWNER TO postgres;
+
+--
+-- Name: servants; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+--
+
+CREATE TABLE servants (
+    name character varying(1000) NOT NULL,
+    in_use integer NOT NULL,
+    ping_failures integer NOT NULL,
+    node_name character varying(100),
+    register_time timestamp without time zone,
+    process_id character varying(100),
+    host_name character varying(500),
+    host_ip character varying(100),
+    os character varying(100),
+    borrow_time timestamp without time zone,
+    borrow_process_id character varying(100),
+    borrow_host_name character varying(500),
+    borrow_host_ip character varying(100),
+    return_time timestamp without time zone,
+    return_process_id character varying(100),
+    return_host_name character varying(500),
+    return_host_ip character varying(100),
+    codebase character varying(500),
+    stub_hex character varying(4000) NOT NULL,
+    borrow_session_info_hex character varying(4000),
+    attributes_hex character varying(4000),
+    job_id character varying(100),
+    job_name character varying(100),
+    notify_email character varying(100),
+    notified integer,
+    owner character varying(100),
+    project character varying(1000),
+    master character varying(1000),
+    dont_monitor character varying(100)
+);
+
+
+ALTER TABLE public.servants OWNER TO postgres;
+
+--
+-- Name: site_data; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+--
+
+CREATE TABLE site_data (
+    site_name character varying(500) NOT NULL,
+    cluster_pool_map character varying(4000) NOT NULL
+);
+
+
+ALTER TABLE public.site_data OWNER TO postgres;
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres; Tablespace:
+--
+
+CREATE TABLE users (
+    login character varying(100) NOT NULL,
+    pwd character varying(500) NOT NULL,
+    status character varying(40) NOT NULL,
+    fullname character varying(400) NOT NULL,
+    userfolder character varying(400) NOT NULL,
+    email character varying(200),
+    profile character varying(1000),
+    registered timestamp without time zone,
+    last_logged_in timestamp without time zone,
+    last_logged_out timestamp without time zone,
+    times_logged_in integer,
+    overall_time interval day to second,
+    poolname character varying(400),
+    supervisor character varying(40),
+    groupname character varying(100),
+    grouphead character varying(100)
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- Data for Name: node_data; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY node_data (node_name, node_type, host_ip, pool_prefix, host_name, login, pwd, install_dir, create_servant_command, kill_servant_command, os, servant_nbr_min, servant_nbr_max, process_counter, step, threshold, basefolder, list_command, setup_profile_command) FROM stdin;
+EMIF_4G	\N	192.168.1.11	EMIF_4G_	rcloud-01	rcloud	xxxx		bsub -J ${JOBNAME} -o /mnt/nfs/rcloud/storage/lsflogs/${JOBNAME}.out -e /mnt/nfs/rcloud/storage/lsflogs/${JOBNAME}.err /mnt/nfs/rcloud/service/startserver -Dnode=${NODENAME} -Dattr.lsf.processid=${JOBNAME} -Djob.id=${JOBNAME} ${OPTIONS}	bkill -J ${attr.lsf.processid}	Linux	2	4	8825	2	2		bjobs -u rcloud-user -w	source /etc/profile.d/openlava.sh && sudo -E -u rcloud-svc
+\.
+
+
+--
+-- Data for Name: options; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY options (option_name, option_value) FROM stdin;
+MAX_FREE_RESOURCE_LIFESPAN_HR	12
+MAX_TIMESLICE_NOTE_HR	144
+MAX_TIMESLICE_HR	168
+MAX_INACTIVITY_NOTE_HR	36
+MAX_INACTIVITY_HR	48
+SERVER_STARTUP_TIMEOUT_SEC	60
+USER_DEFAULT_FOLDER	/mnt/nfs/rcloud/storage/wdir
+MAX_PING_FAILURES	3
+CLUSTERPOOLMAP	default=EMIF_4G
+MAX_PENDING_JOBS	5
+USER_DEFAULT_POOL	EMIF_4G
+\.
+
+
+--
+-- Data for Name: pool_data; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY pool_data (pool_name, timeout, pool_prefixes, on_demand) FROM stdin;
+EMIF_4G	20000	EMIF_4G_	0
+\.
+
+
+--
+-- Data for Name: projects; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY projects (title, folder, owner, status, description, created, last_opened, last_closed, times_opened, overall_time, basefolder, last_activity, notified) FROM stdin;
+test	natalja/test	natalja	OPENED		2015-07-01 09:38:26.289751	2015-07-01 11:36:07.927561	\N	2	00:00:00	/mnt/nfs/rcloud/storage/wdir	2015-07-01 11:36:07.927561	0
+New Project	andrew/NewProject	andrew	OPENED	asfasdf\n	2015-06-16 16:53:31.217056	2015-07-14 15:05:49.777492	\N	18	00:00:00	/mnt/nfs/rcloud/storage/wdir	2015-07-14 15:05:49.777492	0
+New Project	andrew22/NewProject	andrew22	NEW	gfh\n	2015-09-22 14:46:34.094032	2015-09-22 14:46:34.094032	\N	0	00:00:00	/mnt/nfs/rcloud/storage/wdir	2015-09-22 14:46:34.094032	0
+\.
+
+
+--
+-- Data for Name: servants; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY servants (name, in_use, ping_failures, node_name, register_time, process_id, host_name, host_ip, os, borrow_time, borrow_process_id, borrow_host_name, borrow_host_ip, return_time, return_process_id, return_host_name, return_host_ip, codebase, stub_hex, borrow_session_info_hex, attributes_hex, job_id, job_name, notify_email, notified, owner, project, master, dont_monitor) FROM stdin;
+EMIF_4G_367908	0	0	EMIF_4G	2015-10-26 04:20:06.18649	Unknown	rcloud-04	192.168.1.41	Linux	\N	\N	\N	\N	\N	\N	\N	\N	\N	ACED0005737D00000003000F6A6176612E726D692E52656D6F74650023756B2E61632E6562692E72636C6F75642E7270662E4D616E6167656453657276616E740021756B2E61632E6562692E72636C6F75642E7365727665722E525365727669636573787200176A6176612E6C616E672E7265666C6563742E50726F7879E127DA20CC1043CB0200014C0001687400254C6A6176612F6C616E672F7265666C6563742F496E766F636174696F6E48616E646C65723B78707372002D6A6176612E726D692E7365727665722E52656D6F74654F626A656374496E766F636174696F6E48616E646C657200000000000000020200007872001C6A6176612E726D692E7365727665722E52656D6F74654F626A656374D361B4910C61331E03000078707735000A556E6963617374526566000C3139322E3136382E312E34310000E622C211FE8CAFD88512C8863E5500000150A25FFD7980010078	\N	ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C77080000001000000001740012617474722E6C73662E70726F63657373696474000E454D49465F34475F33363739303878	EMIF_4G_367908	\N	\N	0	\N	\N	\N	\N
+EMIF_4G_165507	0	0	EMIF_4G	2015-10-26 04:58:15.6266	Unknown	rcloud-02	192.168.1.27	Linux	\N	\N	\N	\N	\N	\N	\N	\N	\N	ACED0005737D00000003000F6A6176612E726D692E52656D6F74650023756B2E61632E6562692E72636C6F75642E7270662E4D616E6167656453657276616E740021756B2E61632E6562692E72636C6F75642E7365727665722E525365727669636573787200176A6176612E6C616E672E7265666C6563742E50726F7879E127DA20CC1043CB0200014C0001687400254C6A6176612F6C616E672F7265666C6563742F496E766F636174696F6E48616E646C65723B78707372002D6A6176612E726D692E7365727665722E52656D6F74654F626A656374496E766F636174696F6E48616E646C657200000000000000020200007872001C6A6176612E726D692E7365727665722E52656D6F74654F626A656374D361B4910C61331E03000078707735000A556E6963617374526566000C3139322E3136382E312E32370000B26EA1073D63A273A39F275AB42100000150A282F52580010078	\N	ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C77080000001000000001740012617474722E6C73662E70726F63657373696474000E454D49465F34475F31363535303778	EMIF_4G_165507	\N	\N	0	\N	\N	\N	\N
+EMIF_4G_771559	0	0	EMIF_4G	2015-10-26 04:20:06.184387	Unknown	rcloud-04	192.168.1.41	Linux	\N	\N	\N	\N	\N	\N	\N	\N	\N	ACED0005737D00000003000F6A6176612E726D692E52656D6F74650023756B2E61632E6562692E72636C6F75642E7270662E4D616E6167656453657276616E740021756B2E61632E6562692E72636C6F75642E7365727665722E525365727669636573787200176A6176612E6C616E672E7265666C6563742E50726F7879E127DA20CC1043CB0200014C0001687400254C6A6176612F6C616E672F7265666C6563742F496E766F636174696F6E48616E646C65723B78707372002D6A6176612E726D692E7365727665722E52656D6F74654F626A656374496E766F636174696F6E48616E646C657200000000000000020200007872001C6A6176612E726D692E7365727665722E52656D6F74654F626A656374D361B4910C61331E03000078707735000A556E6963617374526566000C3139322E3136382E312E34310000EA9A95E35DB7E9A00D63D955415000000150A25FFD7180010078	\N	ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C77080000001000000001740012617474722E6C73662E70726F63657373696474000E454D49465F34475F37373135353978	EMIF_4G_771559	\N	\N	0	\N	\N	\N	\N
+EMIF_4G_244638	0	0	EMIF_4G	2015-10-26 04:58:15.626121	Unknown	rcloud-02	192.168.1.27	Linux	\N	\N	\N	\N	\N	\N	\N	\N	\N	ACED0005737D00000003000F6A6176612E726D692E52656D6F74650023756B2E61632E6562692E72636C6F75642E7270662E4D616E6167656453657276616E740021756B2E61632E6562692E72636C6F75642E7365727665722E525365727669636573787200176A6176612E6C616E672E7265666C6563742E50726F7879E127DA20CC1043CB0200014C0001687400254C6A6176612F6C616E672F7265666C6563742F496E766F636174696F6E48616E646C65723B78707372002D6A6176612E726D692E7365727665722E52656D6F74654F626A656374496E766F636174696F6E48616E646C657200000000000000020200007872001C6A6176612E726D692E7365727665722E52656D6F74654F626A656374D361B4910C61331E03000078707735000A556E6963617374526566000C3139322E3136382E312E32370000E4A36050C9D60048438AB5D4FE1100000150A282F52580010078	\N	ACED0005737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C77080000001000000001740012617474722E6C73662E70726F63657373696474000E454D49465F34475F32343436333878	EMIF_4G_244638	\N	\N	0	\N	\N	\N	\N
+\.
+
+
+--
+-- Data for Name: site_data; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY site_data (site_name, cluster_pool_map) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY users (login, pwd, status, fullname, userfolder, email, profile, registered, last_logged_in, last_logged_out, times_logged_in, overall_time, poolname, supervisor, groupname, grouphead) FROM stdin;
+natalja	xxxx	ONLINE	Natalja	/mnt/nfs/rcloud/storage/wdir/natalja	natalja@ebi.ac.uk		2015-07-01 09:37:47.705747	2015-07-01 13:38:44.798411	\N	4	00:00:00	EMIF_4G	\N	\N	\N
+andrew	xxxx	ONLINE	Andrew Tikhonov	/mnt/nfs/rcloud/storage/wdir/andrew	andrew@ebi.ac.uk	andrew	2015-06-16 16:51:45.31836	2015-07-14 15:05:48.916708	\N	19	00:00:00	EMIF_4G	\N	\N	\N
+andrew22	xxxx	ONLINE	Andrew22 Tikhonov	/mnt/nfs/rcloud/storage/wdir/andrew22	andrew@ebi.ac.uk	default	2015-09-22 14:42:41.097416	2015-10-16 16:31:15.237357	\N	3	00:00:00	EMIF_4G	\N	\N	\N
+\.
+
+
+--
+-- Name: unique__pool_name; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
+--
+
+ALTER TABLE ONLY pool_data
+    ADD CONSTRAINT unique__pool_name UNIQUE (pool_name);
+
+
+--
+-- Name: unique_login; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT unique_login UNIQUE (login);
+
+
+--
+-- Name: unique_name; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
+--
+
+ALTER TABLE ONLY servants
+    ADD CONSTRAINT unique_name UNIQUE (name);
+
+
+--
+-- Name: unique_node_name; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
+--
+
+ALTER TABLE ONLY node_data
+    ADD CONSTRAINT unique_node_name UNIQUE (node_name);
+
+
+--
+-- Name: unique_option_name; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
+--
+
+ALTER TABLE ONLY options
+    ADD CONSTRAINT unique_option_name UNIQUE (option_name);
+
+
+--
+-- Name: unique_project_folder; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
+--
+
+ALTER TABLE ONLY projects
+    ADD CONSTRAINT unique_project_folder UNIQUE (folder);
+
+
+--
+-- Name: unique_site_name; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace:
+--
+
+ALTER TABLE ONLY site_data
+    ADD CONSTRAINT unique_site_name UNIQUE (site_name);
+
+
+--
+-- Name: stubs_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace:
+--
+
+CREATE INDEX stubs_idx ON servants USING btree (stub_hex);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- Name: node_data; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE node_data FROM PUBLIC;
+REVOKE ALL ON TABLE node_data FROM postgres;
+GRANT ALL ON TABLE node_data TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE node_data TO rcloud;
+
+
+--
+-- Name: options; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE options FROM PUBLIC;
+REVOKE ALL ON TABLE options FROM postgres;
+GRANT ALL ON TABLE options TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE options TO rcloud;
+
+
+--
+-- Name: pool_data; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE pool_data FROM PUBLIC;
+REVOKE ALL ON TABLE pool_data FROM postgres;
+GRANT ALL ON TABLE pool_data TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE pool_data TO rcloud;
+
+
+--
+-- Name: projects; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE projects FROM PUBLIC;
+REVOKE ALL ON TABLE projects FROM postgres;
+GRANT ALL ON TABLE projects TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE projects TO rcloud;
+
+
+--
+-- Name: servants; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE servants FROM PUBLIC;
+REVOKE ALL ON TABLE servants FROM postgres;
+GRANT ALL ON TABLE servants TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE servants TO rcloud;
+
+
+--
+-- Name: site_data; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE site_data FROM PUBLIC;
+REVOKE ALL ON TABLE site_data FROM postgres;
+GRANT ALL ON TABLE site_data TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE site_data TO rcloud;
+
+
+--
+-- Name: users; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE users FROM PUBLIC;
+REVOKE ALL ON TABLE users FROM postgres;
+GRANT ALL ON TABLE users TO postgres;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE users TO rcloud;
+
+
+--
+-- PostgreSQL database dump complete
+--

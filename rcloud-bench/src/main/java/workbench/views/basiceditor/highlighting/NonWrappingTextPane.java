@@ -1,0 +1,56 @@
+/*
+ * R Cloud - R-based Cloud Platform for Computational Research
+ * at EMBL-EBI (European Bioinformatics Institute)
+ *
+ * Copyright (C) 2007-2015 European Bioinformatics Institute
+ * Copyright (C) 2009-2015 Andrew Tikhonov - andrew.tikhonov@gmail.com
+ * Copyright (C) 2007-2009 Karim Chine - karim.chine@m4x.org
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package workbench.views.basiceditor.highlighting;
+
+import uk.ac.ebi.rcloud.common.components.JTextPaneExt;
+
+import java.awt.*;
+import javax.swing.plaf.ComponentUI;
+
+public class NonWrappingTextPane extends JTextPaneExt {
+      // The method below is coutesy of Core Swing Advanced Programming by Kim Topley
+      //
+      // Override getScrollableTracksViewportWidth
+      // to preserve the full width of the text
+      public boolean getScrollableTracksViewportWidth() {
+                Component parent = getParent();
+                ComponentUI ui = getUI();
+                return parent != null ? (ui.getPreferredSize(this).width <= parent.getSize().width) : true;
+    }
+
+    private Integer charwidth = null;
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        
+        if (charwidth == null) {
+            charwidth = getFontMetrics(getFont()).stringWidth("1");
+        }
+
+        int width = charwidth * 120;
+
+        g.setColor(Color.GRAY);
+        g.drawLine(width,0,width,getHeight());
+    }
+
+}
+

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<config>
+
+    <commands>
+        <load-package>library("$PKGNAME")</load-package>
+        <unload-package>detach("package:$PKGNAME", unload=T)</unload-package>
+    </commands>
+
+</config>

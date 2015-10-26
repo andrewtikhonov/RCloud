@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<config>
+
+    <init>
+        <command></command>
+        <command></command>
+    </init>
+
+    <commons>
+        <cran-package-install-cmd>install.packages(pkgs="$PKGNAME"\, lib="$LIBPATH"\, repos="$REPOS")</cran-package-install-cmd>
+        <bioc-package-install-cmd>biocinstall(pkgs="$PKGNAME"\, lib="$LIBPATH")</bioc-package-install-cmd>
+
+        <cran-repository-init-cmd></cran-repository-init-cmd>
+        <bioc-repository-init-cmd></bioc-repository-init-cmd>
+    </commons>
+
+    <!-- http://www.ebi.ac.uk/Tools/bioconductor -->
+
+    <repositories>
+        <repository>
+            <name>CRAN sources</name>
+            <url>http://mirrors.ebi.ac.uk/CRAN</url>
+            <url2>http://cran.uk.r-project.org</url2>
+            <url3>http://wwwdev.ebi.ac.uk/Tools/rcloud/repos/CRAN</url3>
+            <repository-init-cmd>commons.cran-repository-init-cmd</repository-init-cmd>
+            <package-install-cmd>commons.cran-package-install-cmd</package-install-cmd>
+        </repository>
+
+        <repository>
+            <name>BioConductor main</name>
+            <url>http://mirrors.ebi.ac.uk/bioconductor/packages/2.6/bioc</url>
+            <url2>http://bioconductor.org/packages/3.1/bioc</url2>
+            <repository-init-cmd>commons.bioc-repository-init-cmd</repository-init-cmd>
+            <package-install-cmd>commons.bioc-package-install-cmd</package-install-cmd>
+        </repository>
+
+        <repository>
+            <name>BioConductor data/annotation</name>
+            <url>http://mirrors.ebi.ac.uk/bioconductor/packages/2.6/data/annotation</url>
+            <url2>http://bioconductor.org/packages/3.1/data/annotation</url2>
+            <repository-init-cmd>commons.bioc-repository-init-cmd</repository-init-cmd>
+            <package-install-cmd>commons.bioc-package-install-cmd</package-install-cmd>
+        </repository>
+
+        <repository>
+            <name>BioConductor data/experiment</name>
+            <url>http://mirrors.ebi.ac.uk/bioconductor/packages/2.6/data/experiment</url>
+            <url2>http://bioconductor.org/packages/3.1/data/experiment</url2>
+            <repository-init-cmd>commons.bioc-repository-init-cmd</repository-init-cmd>
+            <package-install-cmd>commons.bioc-package-install-cmd</package-install-cmd>
+        </repository>
+
+        <repository>
+            <name>Other Repository URL 1</name>
+            <url></url>
+            <repository-init-cmd></repository-init-cmd>
+            <package-install-cmd>commons.cran-package-install-cmd</package-install-cmd>
+        </repository>
+
+        <repository>
+            <name>Other Repository URL 2</name>
+            <url></url>
+            <repository-init-cmd></repository-init-cmd>
+            <package-install-cmd>commons.cran-package-install-cmd</package-install-cmd>
+        </repository>
+
+    </repositories>
+
+</config>
