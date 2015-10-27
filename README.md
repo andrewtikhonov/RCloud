@@ -1,24 +1,27 @@
 # RCloud
 
-##Some scripts located at https://github.com/olgamelnichuk/ansible-vcloud might be of useful installation or R Cloud and configuration of cluster.
+## Overview
 
-### Read https://github.com/olgamelnichuk/ansible-vcloud/blob/master/setup_openlava.readme file first.
-### setup optlava cluster
+R Cloud is a distributed framework for computational research. R Cloud runs numerous servers in the background that researchers utilize for their needs, mainly for parallel processing of massive datasets. Part of the R Cloud is the R Cloud Workbench, an IDE, feature-rich client application for research and development in the R Cloud environment. R Cloud Workbench communicates with the backend R Cloud servers.
+
+## Installation
+
+Some scripts located at https://github.com/olgamelnichuk/ansible-vcloud might be of use during installation of the R Cloud and configuration of cluster.
+
+### Setup optlava cluster
+Read https://github.com/olgamelnichuk/ansible-vcloud/blob/master/setup_openlava.readme file first.
 ```
 ansible-playbook -i hosts -c ssh -e@./secret.yml setup_openlava_cluster.yml --ask-pass
 ```
 
-### setup rcloud dependencies
+### Setup R Cloud dependencies
+These are needed for installation of R
 ```
 ansible-playbook -i hosts -c ssh setup_rcloud_dependencies.yml --ask-pass
 ```
 
-### setup rcloud dependencies
-```
-ansible-playbook -i hosts -c ssh setup_rcloud_dependencies.yml --ask-pass
-```
-
-### setup java
+### Setup java
+R Cloud is a framework written in Java.
 ```
 ansible-playbook -i hosts -c ssh setup_rcloud_java.yml --ask-pass
 ```
@@ -38,5 +41,18 @@ ansible-playbook -i hosts -c ssh -e@./setup_rcloud_user_vars.yml setup_rcloud_us
 ```
 ansible-playbook -i hosts -c ssh setup_rcloud_chown_home_dirs.yml --ask-pass
 ```
+
+### Install R
+Please follow instuctions on the official R web site https://www.r-project.org
+
+### Compile and install, the R Cloud
+```
+git pull
+mvn package
+```
+
+### Deploy rcloud-web.war to a Tomcat container
+
+### Deploy rcloud-server.jar to the location where R Cloud server will be kept
 
 
