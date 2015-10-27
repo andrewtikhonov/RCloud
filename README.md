@@ -43,7 +43,7 @@ ansible-playbook -i hosts -c ssh setup_rcloud_chown_home_dirs.yml --ask-pass
 ```
 
 ### Install R
-Please follow instuctions on the official R web site https://www.r-project.org
+Please follow instuctions from the official R web site https://www.r-project.org
 
 ### Compile and install, the R Cloud
 ```
@@ -51,8 +51,16 @@ git pull
 mvn package
 ```
 
-### Deploy rcloud-web.war to a Tomcat container
+Deploy rcloud-web.war to a Tomcat container
 
-### Deploy rcloud-server.jar to the location where R Cloud server will be kept
+Deploy rcloud-server.jar to the location where R Cloud server will be kept
+```
+mv rcloud-server.jar /mnt/rcloud/service/
+```
 
+### Install postgress database
+Follow instuctions from http://www.postgresql.org/
+
+### Populate the database
+Sample R Cloud database for EMIF project can be found from https://github.com/andrewtikhonov/RCloud/blob/master/testdb.txt
 
